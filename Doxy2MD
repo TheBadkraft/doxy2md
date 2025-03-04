@@ -1,0 +1,14 @@
+# Default target
+default: doxy
+
+# Sigcore header target
+sigcore: test/sigcore.h outdir=docs
+
+# Doxy wildcard target
+doxy: src/* include/* outdir=docs
+
+# Multi-file target (stub for later)
+parser: include/parser.h src/parser.c outdir=docs
+
+# Multi-file target (stub for later)
+test: include/* src/* test/sigcore.h
