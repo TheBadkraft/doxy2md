@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -g -Iinclude
+CFLAGS = -Wall -g -Iinclude -std=c99
 LDFLAGS = -lsigcore  # Link against sigcore library
 
 # Directories
