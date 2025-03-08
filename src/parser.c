@@ -49,7 +49,6 @@ static void free_target(target);
 static int process_target(target, list, doxy_config*);
 static int process_file(const string, list);
 static comment init_comment();
-static void free_comment(comment);
 static string parse_comment_line(const string, TAGTYPE*);
 static string extract_signature(FILE*, string*, string*);
 
@@ -68,7 +67,7 @@ static list parse_doxy2md(doxy_config* config) {
 	
 	
 	comments = List.new(100);
-	if (List.count(config->sources) > 0) {
+	if (config->sources && List.count(config->sources) > 0) {
 		printf("IS_DEBUG=%s\n", IS_DEBUG ? "TRUE" : "FALSE");
 		printf("cfg.file=%s\n", config->file);
 		printf("cfg.output=%s\n", config->output);
@@ -349,7 +348,6 @@ static int process_target(target t, list comments, doxy_config* config) {
 		++i;
 	}
 		
-	/*
 	//	build output file w/ output directory
 	string_builder outfile_sb = StringBuilder.new(MAX_TARGET);
 	if (t->outdir) {
@@ -361,6 +359,7 @@ static int process_target(target t, list comments, doxy_config* config) {
 	//	output documentation - if an output override is not give we have to allocate the space
 	string outfile = StringBuilder.toString(outfile_sb);
 	
+	/*
 	FILE* out = fopen(outfile, "w");
 	if (out) {
 		StringBuilder.toStream(sb, out);
@@ -370,6 +369,7 @@ static int process_target(target t, list comments, doxy_config* config) {
 		fprintf(stderr, "Failed to open target %s\n", outfile);
 		ret = 1;
 	}
+	*/
 	
 	if (config->output) {
 		if (strcmp(config->output, outfile) != 0) {
@@ -387,8 +387,6 @@ static int process_target(target t, list comments, doxy_config* config) {
 	
 	Mem.free(outfile);
 	StringBuilder.free(outfile_sb);
-	StringBuilder.free(sb);
-	*/
 	
 cleanup:
 	if (it) Iterator.free(it);
@@ -410,7 +408,8 @@ static int process_file(const string filename, list comments) {
 	char line[MAX_LINE];
 	int in_comment = 0;
 	comment c = NULL;
-
+	TAGTYPE lastTagType = NONE; // Track last tag for continuation lines
+	
 	while (fgets(line, MAX_LINE, in)) {
 		string trimmed = trim(line);
 		//printf("Line: '%s'\n", trimmed); // Debug: see every line
@@ -422,7 +421,9 @@ static int process_file(const string filename, list comments) {
 				fclose(in);
 				return 1;
 			}
-			if (IS_DEBUG) printf("Start comment block\n"); // Debug
+			c->filename = Mem.alloc(strlen(filename) + 1);	// set filename
+			strcpy(c->filename, filename);
+			if (IS_DEBUG) printf("Start comment block\n"); 	// Debug
 			continue;
 		}
 
@@ -458,13 +459,20 @@ static int process_file(const string filename, list comments) {
 				} else if (tagType == BRIEF) {
 					c->brief = result;
 				} else if (tagType == DTAIL) {
-					StringBuilder.appendLine(c->details, result);
+					StringBuilder.appendls(c->details, result);
 					Mem.free(result);		//	free result since sb copies result
 				} else if (tagType == NONE && strncmp(trimmed, DOXFILE, strlen(DOXFILE)) == 0) {
 					c->is_file = 1;
 					Mem.free(result);
 				} else {
 					Mem.free(result);
+				}
+				lastTagType = tagType;	//	update last tag
+			} else if (lastTagType == DTAIL && trimmed[0] == '*') {	// continuation line
+				string continuation = trim(trimmed + 1);					// skip '*'
+				if (strlen(continuation) > 0) {
+					if (IS_DEBUG) printf("-       '%s' (param=0, ret=0)\n", continuation);
+					StringBuilder.appendls(c->details, continuation);
 				}
 			}
 		}
@@ -489,6 +497,7 @@ static comment init_comment() {
 		c->func_name = NULL;
 		c->ret_type = NULL;
 		c->is_file = 0;
+		c->filename = NULL;
 	}
 	
 	return c;
@@ -497,7 +506,7 @@ static comment init_comment() {
  * @brief Frees a Comment and its resources.
  * @param c Comment to free.
  */
-static void free_comment(comment c) {
+void free_comment(comment c) {
 	if (!c) return;
 	if (c->brief) Mem.free(c->brief);
 	if (c->details) StringBuilder.free(c->details);
@@ -511,6 +520,7 @@ static void free_comment(comment c) {
 	if (c->signature) Mem.free(c->signature);
 	if (c->func_name) Mem.free(c->func_name);
 	if (c->ret_type) Mem.free(c->ret_type);
+	if (c->filename) Mem.free(c->filename);
 	
 	Mem.free(c);
 }

@@ -8,7 +8,7 @@ static void md_generate(string_builder sb, list comments, const string template)
 		//	minimal rendering for now -- to be expanced
 		if (c->brief) {
 			if (c->is_file) {
-				StringBuilder.appendf(sb, "#### File: %s\n", "main.c");
+				StringBuilder.appendf(sb, "#### File: %s\n", c->filename);
 			} else {
 				StringBuilder.appendf(sb, "#### %s\n", c->func_name ? c->func_name : "File");
 			}

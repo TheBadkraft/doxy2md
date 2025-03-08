@@ -33,6 +33,7 @@ struct comment_s {
 	string func_name; /**< Function name */
 	string ret_type;	/**< Return type */
 	int is_file;		/**< Flag for file-level comments */
+	string filename;	/**< Source file name for @file metadata */
 };
 typedef struct comment_s* comment;
 
@@ -55,7 +56,11 @@ extern const IParser Parser;
  * @param str String to trim.
  * @return Trimmed string.
  */
-string trim(string str); // Declaration only
-
+string trim(string str);
+/**
+ * @brief Frees a Comment and its resources.
+ * @param c Comment to free.
+ */
+void free_comment(comment);
 
 #endif // PARSER_H
