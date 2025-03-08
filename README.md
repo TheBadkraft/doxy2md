@@ -18,7 +18,7 @@ A lightweight tool to extract Doxygen-style comments from C source files and gen
    `make install`  # Installs to ~/bin  
 4. **Verify**: `doxy2md --version` (should print `doxy2md version 1.0`).
 
-## Usage
+## Usage  
 `doxy2md [<target>] [-o <output.md>] [--debug] [--version] [<config_file>]`  
 - `<target>`: Specify a target from `Doxy2MD` (default: `default`).
 - `-o <output.md>`: Override the output file (default: `<target>.md` or `outdir/<target>.md`).
@@ -26,15 +26,17 @@ A lightweight tool to extract Doxygen-style comments from C source files and gen
 - `--version`: Show version and exit.
 - `<config_file>`: Custom config file (default: `Doxy2MD`).
 
-### Example `Doxy2MD` Config
+### Example `Doxy2MD` Config  
 *If you're familiar with **Makefile** this will be very similar*  
-`default: doxy`  
-`doxy: src/main.c include/*.h outdir=docs`  
+```
+default: doxy` 
+doxy: src/main.c include/*.h outdir=docs
+```
 - **Run**: `doxy2md doxy --debug`
 - **Output**: Generates `docs/doxy.md` with comments from `src/main.c` and headers.
 
-## Example Output
-For this code in `src/main.c`:
+## Example Output  
+For this code in `src/main.c`:  
 ``` c
 /**
  * @file main.c
@@ -53,26 +55,22 @@ A tool to extract Doxygen comments.
 
 This utility parses C files for comments.
 
-#### main
+#### main  
 int main(int argc, char** argv)
 ```
+-----    
+#### File: src/main.c  
+A tool to extract Doxygen comments.  
 
-... resulting in:
------  
-#### File: src/main.c
-A tool to extract Doxygen comments.
+This utility parses C files for comments.  
 
-This utility parses C files for comments.
-
-#### main
-int main(int argc, char** argv)
------  
+#### main  
+int main(int argc, char** argv)  
 
 ## Building from Source
 - **Requirements**: `gcc`, `make`, `sigcore`.
 - **Compile**: `make`.
 - **Clean**: `make clean`.
-```
 
 ## License
 [GNU GENERAL PUBLIC LICENSE][2]
