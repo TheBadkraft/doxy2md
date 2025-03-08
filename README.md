@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 ```
 
 Running `doxy2md doxy` with `outdir=docs` produces `docs/doxy.md`:
-```
+``` plaintext  
 #### File: src/main.c
 A tool to extract Doxygen comments.
 
@@ -57,15 +57,15 @@ This utility parses C files for comments.
 
 #### main  
 int main(int argc, char** argv)
-```
+```  
 Results:      
-#### File: src/main.c  
-A tool to extract Doxygen comments.  
-
-This utility parses C files for comments.  
-
-#### main  
-int main(int argc, char** argv)  
+> #### File: src/main.c  
+> A tool to extract Doxygen comments.  
+>  
+> This utility parses C files for comments.  
+>  
+> #### main  
+> int main(int argc, char** argv)  
   
 ## Building from Source
 - **Requirements**: `gcc`, `make`, `sigcore`.
