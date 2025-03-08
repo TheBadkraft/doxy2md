@@ -58,9 +58,11 @@ int main(int argc, char** argv)
 - **Clean**: `make clean`.
 
 ## License
-TBD (specify your license here).
+[GNU GENERAL PUBLIC LICENSE][2]
+- Version 3, 29 June 2007
 
 ## Version
 Current: 1.0 (Initial release with core parsing and Markdown generation).
 
-[1]: https://github.com/TheBadkraft/sigcore
+[1]: https://github.com/TheBadkraft/sigcore  
+[2]: https://github.com/TheBadkraft/doxy2md/blob/main/LICENSE
