@@ -35,27 +35,44 @@ A lightweight tool to extract Doxygen-style comments from C source files and gen
 
 ## Example Output
 For this code in `src/main.c`:
-`/**
+``` c
+/**
  * @file main.c
  * @brief A tool to extract Doxygen comments.
  * @details This utility parses C files for comments.
- */`
-`int main(int argc, char** argv) {`
-`    return 0;`
-`}`
+ */
+int main(int argc, char** argv) {
+   return 0;
+}
+```
+
 Running `doxy2md doxy` with `outdir=docs` produces `docs/doxy.md`:
-`#### File: src/main.c`
-`A tool to extract Doxygen comments.`
-` `
-`This utility parses C files for comments.`
-` `
-`#### main`
+```
+#### File: src/main.c
+A tool to extract Doxygen comments.
+
+This utility parses C files for comments.
+
+#### main
 int main(int argc, char** argv)
+```
+
+... resulting in:
+-----  
+#### File: src/main.c
+A tool to extract Doxygen comments.
+
+This utility parses C files for comments.
+
+#### main
+int main(int argc, char** argv)
+-----  
 
 ## Building from Source
 - **Requirements**: `gcc`, `make`, `sigcore`.
 - **Compile**: `make`.
 - **Clean**: `make clean`.
+```
 
 ## License
 [GNU GENERAL PUBLIC LICENSE][2]
