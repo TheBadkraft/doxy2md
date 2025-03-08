@@ -5,7 +5,7 @@ default: doxy
 sigcore: test/sigcore.h outdir=docs
 
 # Doxy wildcard target
-doxy: src/* include/* outdir=docs
+doxy: src/main.c include/* outdir=docs
 
 # Multi-file target (stub for later)
 parser: include/parser.h src/parser.c outdir=docs
