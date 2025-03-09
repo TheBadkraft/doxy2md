@@ -28,7 +28,7 @@ A lightweight tool to extract Doxygen-style comments from C source files and gen
 
 ### Example `Doxy2MD` Config  
 *If you're familiar with **Makefile** this will be very similar*  
-```
+``` plaintext
 default: doxy` 
 doxy: src/main.c include/*.h outdir=docs
 ```
