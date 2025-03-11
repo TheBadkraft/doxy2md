@@ -459,7 +459,7 @@ static int process_file(const string filename, list comments) {
 				} else if (tagType == BRIEF) {
 					c->brief = result;
 				} else if (tagType == DTAIL) {
-					StringBuilder.appendls(c->details, result);
+					StringBuilder.lappends(c->details, result);
 					Mem.free(result);		//	free result since sb copies result
 				} else if (tagType == NONE && strncmp(trimmed, DOXFILE, strlen(DOXFILE)) == 0) {
 					c->is_file = 1;
@@ -472,7 +472,7 @@ static int process_file(const string filename, list comments) {
 				string continuation = trim(trimmed + 1);					// skip '*'
 				if (strlen(continuation) > 0) {
 					if (IS_DEBUG) printf("-       '%s' (param=0, ret=0)\n", continuation);
-					StringBuilder.appendls(c->details, continuation);
+					StringBuilder.lappends(c->details, continuation);
 				}
 			}
 		}
