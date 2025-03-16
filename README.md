@@ -10,7 +10,7 @@ A lightweight tool to extract Doxygen-style comments from C source files and gen
 - CLI-driven with version info and debug mode.
 
 ## Installation
-1. **Prerequisites**: GCC, [`sigcore`][1] library.
+1. **Prerequisites**: GCC, [`sigcore` library][1].
 2. **Clone**: `git clone <https://github.com/TheBadkraft/doxy2md.git>`
 3. **Build**:  
    `cd doxy2md`  
